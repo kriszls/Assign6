@@ -1,0 +1,95 @@
+// CIS 226 Assignment 6
+// Assign6.java - Programme to teach elementary school children multiplication
+//                through generation of single digit ( 1 through 9 ) multiplication 
+//                problems
+// Kris Chan - April 3 2014
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+
+public class Assign6 extends JApplet implements ActionListener 
+
+{
+	JTextField question, input;
+	JLabel prompt;
+	int answer, guess;
+	String questionString;
+	
+	public void init()
+	{
+	    // set guess to determine value of user input
+		guess = -999;
+		
+		// create text fields and label
+		question = new JTextField(15);
+		question.setEditable(false);
+		
+		prompt = new JLabel("Good luck! Input your answer: ");
+		
+		input = new JTextField(4);
+		input.addActionListener( this );
+		
+		// add components to applet
+		Container container = getContentPane();
+		container.setLayout(  new FlowLayout() );
+		container.add( question );
+		container.add( prompt );
+		container.add( input );
+		
+		// generate and pose question to user
+		generateQuestion();
+		 
+	}
+	
+	
+	// show if answer was correct or not
+	public void paint ( Graphics g ) 
+	{
+		super.paint(g);
+		
+		// figure out if user input is accurate
+		// if guess has no value, indicate as such
+		if ( guess != -999 );
+		{
+			if ( guess != answer )
+				g.drawString("No. Please try again.", 20, 70 );
+			else 
+			{
+				g.drawString("Very Good!", 20, 70 );
+				generateQuestion();
+			}
+			
+			guess = -999;
+		}
+	}
+	
+	// verify user input
+	public void actionPerformed( ActionEvent e )
+	{
+		guess = Integer.parseInt( input.getText() );
+		
+		// clear text field
+		input.setText( "" );
+		
+		// display correct response
+		repaint();
+	}
+	
+	// generate new question and correct answer
+	public void generateQuestion()
+	{
+		// get two random numbers between 1 and 9
+		int number1 = ( int ) ( Math.random() * 10 );
+		int number2 = ( int ) ( Math.random() * 10 );
+		
+		answer = number1 * number2;
+		questionString = "How much is " + number1 + " times " +
+				number2 + " ?";
+		
+		// add to applet
+		question.setText( questionString );
+	}
+
+} // end class Assign6

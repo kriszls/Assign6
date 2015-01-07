@@ -1,0 +1,79 @@
+// Programmer : Kris Chan
+// Programme generates single digit multiplication problems
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+
+public class Assign6 extends JApplet implements ActionListener 
+
+{
+	JTextField question, input;
+	JLabel prompt;
+	int answer, guess;
+	String questionString;
+	
+	public void init()
+	{
+		
+		guess = -999;
+		
+		question = new JTextField(25);
+		question.setEditable(false);
+		
+		prompt = new JLabel("Good luck! Input your answer: ");
+		
+		input = new JTextField(4);
+		input.addActionListener( this );
+		
+		Container container = getContentPane();
+		container.setLayout(  new FlowLayout() );
+		container.add( question );
+		container.add( prompt );
+		container.add( input );
+		
+		generateQuestion();
+		 
+	}
+	
+	public void paint ( Graphics g ) 
+	{
+		super.paint(g);
+		
+		if ( guess != -999 );
+		{
+			if ( guess != answer )
+				g.drawString("No. Please try again.", 30, 70);
+			else 
+			{
+				g.drawString("Very Good!", 30, 70 );
+				generateQuestion();
+			}
+			
+			guess = -999;
+		}
+	}
+	
+	public void actionPerformed( ActionEvent e )
+	{
+		guess = Integer.parseInt( input.getText() );
+		
+		input.setText("");
+		
+		repaint();
+	}
+	
+	public void generateQuestion()
+	{
+		int number1 = ( int ) ( Math.random() * 10 );
+		int number2 = ( int ) ( Math.random() * 10 );
+		
+		answer = number1 * number2;
+		questionString = "How much is " + number1 + " times " +
+				number2 + " ?";
+		
+		question.setText( questionString );
+	}
+
+}

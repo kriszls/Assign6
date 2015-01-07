@@ -1,0 +1,124 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+
+public class Assign6 extends JApplet implements ActionListener 
+{
+	JTextField question, input, response;
+	JLabel prompt;
+	int answer, guess;
+	String questionString;
+	
+	public void init()
+	{
+		// set guess to check value and existence of user input
+		guess = -999;
+		
+		// create text fields and label
+		
+		question = new JTextField( 20 );
+		question.setEditable( false );
+	
+		prompt = new JLabel( "Input your answer: ");
+	
+		input = new JTextField( 4 );
+		input.addActionListener( this );
+	
+		// add components to applet
+		Container container = getContentPane();
+		container.setLayout( new FlowLayout() );
+		container.add( question );
+		container.add( prompt );
+		container.add( input );
+		
+		// generate a question()
+		generateQuestion();
+	}
+	
+	// show if user input was correct
+	public void paint ( Graphics g )
+	{
+		super.paint( g );
+		
+		// determine if user input was corrent
+		// if guess is not a valid value, indicate as such
+		if ( guess != -999 )
+		{
+			if ( guess != answer )
+				g.drawString( generateResponse ( false ), 20, 70 );
+			else
+				g.drawString( generateResponse ( true ), 20, 70 );
+		}
+		
+		guess = -999;
+	}
+
+
+// verify user input
+public void actionPerformed( ActionEvent e )
+{
+	guess = Integer.parseInt( input.getText() );
+	
+	// clear the text field
+	input.setText( "" );
+	
+	// display the correct answer
+	repaint();
+}
+
+// generate new question and correct answer
+public void generateQuestion()
+{
+	// get two random numbers between 1 and 9 from user input
+	int number1 = ( int ) ( Math.random() * 10 );
+	int number2 = ( int ) ( Math.random() * 10 );
+	
+	answer = number1 * number2;
+	questionString = "How much is " + number1 + " times " +
+			number2 + " ?";
+	
+	// add to applet
+	question.setText( questionString );
+}
+
+// for extra credit
+// generate 8 responses total and display one at random
+
+public String generateResponse( boolean correct )
+{
+	if ( correct )
+		switch ( ( int ) ( Math.random() * 4 ) )
+		{
+		case 0:
+			return( "Very Good!" );
+			
+		case 1:
+			return( "Excellent!" );
+			
+		case 2:
+			return( "Nice work! ");
+			
+		case 3:
+			return( "Keep up the good work! ");
+		}
+	
+		// responses if user input is incorrect
+		switch ( ( int ) ( Math.random() * 4 ) )
+		{
+		case 0:
+			return( "No. Please try again. " );
+		
+		case 1:
+			return( "wrong. Try once more. " );
+		
+		case 2:
+			return( "Don't give up!" );
+		
+		case 3:
+			return( "No. Keep trying." );
+		}
+	
+	} // end of generateResponse
+
+}// end class Assign6

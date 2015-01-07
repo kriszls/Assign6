@@ -1,0 +1,30 @@
+//
+//
+//
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Assign6 extends JApplet implements ActionListener 
+{
+	JTextField question, input, response;
+	JLabel prompt;
+	int answer, guess;
+	String questionString;
+	
+	public void init()
+	{
+		// set guess to validate value and existence of user input
+		question = new JTextField( 20 );
+		question.setEditable( false );
+		
+		prompt = new JLabel( "Input your answer: ");
+		
+		input = new JTextField( 4 );
+		input.addActionListener( this );
+		
+		// add components tp applet
+		
+	}
+}
